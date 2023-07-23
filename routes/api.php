@@ -16,8 +16,13 @@ use app\Http\Controllers\UserController;
 |
 */
 
+// Estas rutas en Laravel definen las diferentes acciones que se pueden realizar 
+//sobre los usuarios 
+//Cada ruta corresponde a un método del controlador 
 
+// localhost:8000/api/users
 Route::get('/users' ,   'App\Http\Controllers\UserController@index');
+Route::get('/users/{id}' ,   'App\Http\Controllers\UserController@getone');
 Route::post('/users',   'App\Http\Controllers\UserController@store');
 Route::put('/users/{id}',   'App\Http\Controllers\UserController@update');
 Route::delete('/users/{id}', 'App\Http\Controllers\UserController@destroy');

@@ -11,10 +11,20 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     //funcion para mostrar todo los usurios
     public function index()
     {
         $user = User::all();
         return response()->json($user);
+    }
+//funcion pra mostrar un usurio por su id
+    public function getone(Request $request, $id){
+
+        $model=User::find($id);
+        return response()->json($model);
+
+
     }
 
     /**
@@ -23,6 +33,8 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     //funcion para guardar un usuario
     public function store(Request $request)
     {
         $validateData=$request->validate([
@@ -39,6 +51,7 @@ class UserController extends Controller
         ],201);
     }
 
+//funcion paara uatenticar a un usuario
     public function login(Request $request){
         $creadencial=$request->validate([
             'email'=> 'required|email',
@@ -76,9 +89,24 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //funcion pra editar un usuario 
     public function update(Request $request, $id)
     {
-        //
+        $validateData=$request->validate([
+            'name'=> 'required|max:255',
+            'email'=>'requerided|unique:users|email|max:255',
+            'password'=>'requerided:8',
+
+        ]);
+        $model=User::find($id);
+
+        if (!$model){
+            return response()->json(['message' => 'Persona no encontrada']);
+        }
+        $model->save();
+
+        return response()->json($model, 200);
     }
 
     /**
@@ -87,8 +115,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+//funcion para borrar un usuario
+ public function destroy($id){
+
+    $user=User::find($id);
+
+    if(!$user){
+        return response()->json(['message' => 'El usurio no eta registrado']);
     }
+
+    $user->delete();
+
+    return  response()->json(['message'=> 'El Usuario a sido borrado exitosament'], 200);
+ }
 }
