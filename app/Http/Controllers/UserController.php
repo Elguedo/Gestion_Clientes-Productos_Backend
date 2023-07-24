@@ -37,12 +37,12 @@ class UserController extends Controller
      //funcion para guardar un usuario
     public function store(Request $request)
     {
-        $validateData=$request->validate([
-            'name'=> 'required|max:255',
-            'email'=>'requerided|unique:users|email|max:255',
-            'password'=>'requerided:8',
-
+        $validateData = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email',
+            'password' => 'required|min:8',
         ]);
+        
         $user = User::create($validateData);
 
         return response()->json([
@@ -95,18 +95,27 @@ class UserController extends Controller
     {
         $validateData=$request->validate([
             'name'=> 'required|max:255',
-            'email'=>'requerided|unique:users|email|max:255',
-            'password'=>'requerided:8',
+            'email'=>'required',
+            'password'=>'required:8',
 
         ]);
         $model=User::find($id);
 
         if (!$model){
-            return response()->json(['message' => 'Persona no encontrada']);
+            return response()->json(['message' => 'Persona no encontrada'],400);
         }
-        $model->save();
 
-        return response()->json($model, 200);
+        $model->name=$validateData['name'];
+        $model->email =$validateData['email'];
+        $model->password = bcrypt($validateData['password']);
+
+        $model->save();
+        return response()->json([
+            'message'=> 'Usuario Actualizado Exitosamente',
+            'user' => $model,
+        ],201);
+            
+            
     }
 
     /**

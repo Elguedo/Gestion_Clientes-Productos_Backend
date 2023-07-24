@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    public $timestamps = false;
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -33,6 +34,19 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function up()
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->timestamps(); // Esto agregará las columnas 'created_at' y 'updated_at'
+    });
+}
+
+public function down()
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->dropTimestamps(); // Esto eliminará las columnas 'created_at' y 'updated_at'
+    });
+}
     /**
      * The attributes that should be cast.
      *
