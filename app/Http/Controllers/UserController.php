@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 class UserController extends Controller
@@ -44,6 +44,7 @@ class UserController extends Controller
         ]);
         
         $user = User::create($validateData);
+       
 
         return response()->json([
             'message'=> 'Usuario Creado Exitosamente',
@@ -52,25 +53,28 @@ class UserController extends Controller
     }
 
 //funcion paara uatenticar a un usuario
-    public function login(Request $request){
-        $creadencial=$request->validate([
-            'email'=> 'required|email',
-            'password'=>'required',
+public function login(Request $request)
+{
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:8',
+    ]);
+
+    if (Auth::attempt($credentials)) {
+        // Autenticación exitosa
+        $model = Auth::user();
+        $token = $model->createToken('authToken')->accessToken;
+        return response()->json([
+            'accessToken' => $token,
+            'token_type' => 'Bearer',
+            'expire_at' => now()->addHours(1),
         ]);
-
-        if (Auth::attempt($creadencial)){
-            $user=Auth::user();
-            $tokem =$user->createToken('authToken')->accessToken;
-            return response()->jsom([
-                'accessToken'=> $token,
-                'token_type'=> 'Bearer',
-                'expire_at'=> now()->addHours(1),
-
-            ]);
-
-        }
-        return response()->json(['error' => 'Unauthorized'],401);
     }
+
+    // Autenticación fallida
+    return response()->json(['error' => 'Unauthorized'], 401);
+}
+
     /**
      * Display the specified resource.
      *
@@ -96,7 +100,7 @@ class UserController extends Controller
         $validateData=$request->validate([
             'name'=> 'required|max:255',
             'email'=>'required',
-            'password'=>'required:8',
+            'password'=>'required|min:8',
 
         ]);
         $model=User::find($id);
