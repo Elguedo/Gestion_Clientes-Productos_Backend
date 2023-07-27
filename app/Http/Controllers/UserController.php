@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 class UserController extends Controller
@@ -22,6 +23,11 @@ class UserController extends Controller
     public function getone(Request $request, $id){
 
         $model=User::find($id);
+
+        if(!$model){
+            return response()->json(['message' => 'Persona no encontrada'],400);
+
+        }
         return response()->json($model);
 
 
@@ -42,6 +48,8 @@ class UserController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
+
+        $validateData['password'] = bcrypt($validateData['password']);
         
         $user = User::create($validateData);
        
@@ -55,26 +63,28 @@ class UserController extends Controller
 //funcion paara uatenticar a un usuario
 public function login(Request $request)
 {
-    $credentials = $request->validate([
+    $request->validate([
         'email' => 'required|email',
-        'password' => 'required|min:8',
+        'password' => 'required',
     ]);
 
-    if (Auth::attempt($credentials)) {
+    $user = User::where('email', $request->email)->first();
+
+    if ($user && Hash::check($request->password, $user->password)) {
         // Autenticación exitosa
-        $model = Auth::user();
-        $token = $model->createToken('authToken')->accessToken;
+        $token = $user->createToken('authToken')->plainTextToken;
+
         return response()->json([
             'accessToken' => $token,
             'token_type' => 'Bearer',
             'expire_at' => now()->addHours(1),
         ]);
+        dump($token);
+    } else {
+        // Autenticación fallida
+        return response()->json(['error' => 'Credenciales inválidas'], 401);
     }
-
-    // Autenticación fallida
-    return response()->json(['error' => 'Unauthorized'], 401);
 }
-
     /**
      * Display the specified resource.
      *
