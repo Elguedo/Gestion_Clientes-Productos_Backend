@@ -14,7 +14,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        $client=Cliente::all();
+        return response()->json($client);
     }
 
     /**
@@ -22,11 +23,13 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    
+     public function getone(Request $request, $id)
+     {
+         $client=Cliente::find($id);
+         return response()->json($client);
     }
-
+ 
     /**
      * Store a newly created resource in storage.
      *
@@ -35,7 +38,21 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData=$request->validate([
+            'codigo' => 'required',
+            'nombre' => 'required|max:45',
+            'apellido' => 'required|max:45',
+            'email' => 'required',
+           
+        ]);
+
+        $client =Cliente::create($validateData);
+
+        return response()->json([
+            'messge'=>'cliente registrado exitosamente',
+            'client'=>$client,
+
+       ],201);
     }
 
     /**
@@ -44,11 +61,7 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente $cliente)
-    {
-        //
-    }
-
+  
     /**
      * Show the form for editing the specified resource.
      *
@@ -67,9 +80,30 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request, $id)
     {
-        //
+        $validateData=$request->validate([
+            'codigo' => 'required',
+            'nombre' => 'required|max:45',
+            'apellido' => 'required|max:45',
+            'email' => 'required',
+        ]);
+
+        $client=Cliente::find($id);
+
+        if (!$client){
+             return response()->json(['message'=>'El cliente no esta registrado']);
+        }
+        $client->codigo=$validateData['codigo'];
+        $client->nombre=$validateData['nombre'];
+        $client->apellido=$validateData['apellido'];
+        $client->email=$validateData['email'];
+
+        $client->save();
+        return response()->json([
+            'message'=>'Cliente Actualizado exitosamente',
+            'client'=>$client,
+        ],201);
     }
 
     /**
@@ -78,8 +112,14 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cliente $cliente)
+    public function destroy($id)
     {
-        //
+        $cliente=Cliente::find($id);
+
+        if(!$cliente){
+            return response()->json(['message'=>'El cliente no esta registrado']);
+        }
+        $cliente->delete();
+        return response()->json(['message'=>'Cliente Borrado Exitosamente']);
     }
 }

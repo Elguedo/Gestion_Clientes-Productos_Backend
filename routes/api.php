@@ -31,11 +31,11 @@ Route::put('/users/{id}',   'App\Http\Controllers\UserController@update');
 Route::delete('/users/{id}', 'App\Http\Controllers\UserController@destroy');
 Route::post('/login', 'App\Http\Controllers\UserController@login');
 
-Route::get('/clientes' ,   'App\Http\Controllers\ClienteController@getall');
-Route::get('/clientes/{codigo}' ,   'App\Http\Controllers\ClienteController@getone');
-Route::post('/clientes',   'App\Http\Controllers\ClienteController@create');
-Route::put('/clientes/{codigo}',   'App\Http\Controllers\ClienteController@update');
-Route::delete('/clientes/{codigo}', 'App\Http\Controllers\ClienteController@destroy');
+Route::get('/clientes' ,   'App\Http\Controllers\ClienteController@index');
+Route::get('/clientes/{id}' ,   'App\Http\Controllers\ClienteController@getone');
+Route::post('/clientes',   'App\Http\Controllers\ClienteController@store');
+Route::put('/clientes/{id}',   'App\Http\Controllers\ClienteController@update');
+Route::delete('/clientes/{id}', 'App\Http\Controllers\ClienteController@destroy');
 
 
 Route::get('/productos' ,   'App\Http\Controllers\ProductoController@getall');
