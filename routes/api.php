@@ -24,13 +24,16 @@ use app\Http\Controllers\ProductoController;
 //Cada ruta corresponde a un método del controlador 
 
 // localhost:8000/api/users
-Route::get('/users' ,   'App\Http\Controllers\UserController@index');
-Route::get('/users/{id}' ,   'App\Http\Controllers\UserController@getone');
+//Route::get('/users' ,   'App\Http\Controllers\UserController@index');
+//Route::get('/users/{id}' ,   'App\Http\Controllers\UserController@getone');
 Route::post('/users',   'App\Http\Controllers\UserController@store');
 Route::put('/users/{id}',   'App\Http\Controllers\UserController@update');
-Route::delete('/users/{id}', 'App\Http\Controllers\UserController@destroy');
+//Route::delete('/users/{id}', 'App\Http\Controllers\UserController@destroy');
 Route::post('/login', 'App\Http\Controllers\UserController@login');
 
+
+//con esto protejemos las rutas y solo se podran acceder a ellas si me encuentro loguedo 
+Route::group(['middleware' => 'auth:api'], function () {
 Route::get('/clientes' ,   'App\Http\Controllers\ClienteController@index');
 Route::get('/clientes/{id}' ,   'App\Http\Controllers\ClienteController@getone');
 Route::post('/clientes',   'App\Http\Controllers\ClienteController@store');
@@ -38,11 +41,11 @@ Route::put('/clientes/{id}',   'App\Http\Controllers\ClienteController@update');
 Route::delete('/clientes/{id}', 'App\Http\Controllers\ClienteController@destroy');
 
 
-Route::get('/productos' ,   'App\Http\Controllers\ProductoController@getall');
-Route::get('/productos/{codigo}' ,   'App\Http\Controllers\ProductoController@getone');
-Route::post('/productos',   'App\Http\Controllers\ProductoController@create');
-Route::put('/productos/{codigo}',   'App\Http\Controllers\ProductoController@update');
-Route::delete('/productos/{codigo}', 'App\Http\Controllers\ProductoController@destroy');
+Route::get('/products' ,   'App\Http\Controllers\ProductoController@index');
+Route::get('/products/{id}' ,   'App\Http\Controllers\ProductoController@show');
+Route::post('/products',   'App\Http\Controllers\ProductoController@store');
+Route::put('/products/{codigo}',   'App\Http\Controllers\ProductoController@update');
+Route::delete('/products/{id}', 'App\Http\Controllers\ProductoController@destroy');
 
 
 
@@ -51,6 +54,6 @@ Route::get('/compras/{id}' ,   'App\Http\Controllers\CompraController@getone');
 Route::post('/compras',   'App\Http\Controllers\CompraController@create');
 Route::put('/compras/{id}',   'App\Http\Controllers\CompraController@update');
 Route::delete('/compras/{id}', 'App\Http\Controllers\CompraController@destroy');
-
+});
 
  

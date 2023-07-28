@@ -15,8 +15,13 @@ class ClienteController extends Controller
     public function index()
     {
         $client=Cliente::all();
+
+        if($client->isEmpty()){
+            return response()->json(['message' => "No hay Clientes Registrados"],201);    
+        }
         return response()->json($client);
-    }
+}
+
 
     /**
      * Show the form for creating a new resource.

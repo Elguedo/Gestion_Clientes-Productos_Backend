@@ -5,12 +5,12 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
-    public $timestamps = false;
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -34,19 +34,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function up()
-{
-    Schema::table('users', function (Blueprint $table) {
-        $table->timestamps(); // Esto agregará las columnas 'created_at' y 'updated_at'
-    });
-}
-
-public function down()
-{
-    Schema::table('users', function (Blueprint $table) {
-        $table->dropTimestamps(); // Esto eliminará las columnas 'created_at' y 'updated_at'
-    });
-}
     /**
      * The attributes that should be cast.
      *
@@ -55,4 +42,15 @@ public function down()
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Métodos para la interfaz JWTSubject
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }

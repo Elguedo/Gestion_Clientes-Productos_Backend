@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 class UserController extends Controller
 {
     /**
@@ -60,7 +62,7 @@ class UserController extends Controller
         ],201);
     }
 
-//funcion paara uatenticar a un usuario
+//funcion paara utenticar a un usuario
 public function login(Request $request)
 {
     $request->validate([
@@ -68,18 +70,18 @@ public function login(Request $request)
         'password' => 'required',
     ]);
 
-    $user = User::where('email', $request->email)->first();
+    $credentials = $request->only('email', 'password');
 
-    if ($user && Hash::check($request->password, $user->password)) {
+    if (Auth::attempt($credentials)) {
         // Autenticación exitosa
-        $token = $user->createToken('authToken')->plainTextToken;
-
+        $user = Auth::user();
+        $token = JWTAuth::fromUser($user);
+//toker JWT de autenticacion
         return response()->json([
             'accessToken' => $token,
             'token_type' => 'Bearer',
             'expire_at' => now()->addHours(1),
         ]);
-        dump($token);
     } else {
         // Autenticación fallida
         return response()->json(['error' => 'Credenciales inválidas'], 401);
