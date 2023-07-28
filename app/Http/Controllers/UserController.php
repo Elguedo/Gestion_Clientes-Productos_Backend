@@ -62,7 +62,7 @@ class UserController extends Controller
         ],201);
     }
 
-//funcion paara utenticar a un usuario
+//funcion para autenticar a un usuario
 public function login(Request $request)
 {
     $request->validate([
@@ -73,20 +73,23 @@ public function login(Request $request)
     $credentials = $request->only('email', 'password');
 
     if (Auth::attempt($credentials)) {
-        // Autenticación exitosa
         $user = Auth::user();
+        $isAdmin = $user->is_admin; // Verificar si el usuario es administrador
+
         $token = JWTAuth::fromUser($user);
-//toker JWT de autenticacion
+
         return response()->json([
             'accessToken' => $token,
             'token_type' => 'Bearer',
             'expire_at' => now()->addHours(1),
+            'isAdmin' => $isAdmin, // Indicar si el usuario es administrador o no
         ]);
     } else {
         // Autenticación fallida
         return response()->json(['error' => 'Credenciales inválidas'], 401);
     }
 }
+
     /**
      * Display the specified resource.
      *

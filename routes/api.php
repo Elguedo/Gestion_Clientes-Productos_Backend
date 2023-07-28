@@ -33,7 +33,7 @@ Route::post('/login', 'App\Http\Controllers\UserController@login');
 
 
 //con esto protejemos las rutas y solo se podran acceder a ellas si me encuentro loguedo 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => ['auth:api', 'admin']], function () {
 Route::get('/clientes' ,   'App\Http\Controllers\ClienteController@index');
 Route::get('/clientes/{id}' ,   'App\Http\Controllers\ClienteController@getone');
 Route::post('/clientes',   'App\Http\Controllers\ClienteController@store');

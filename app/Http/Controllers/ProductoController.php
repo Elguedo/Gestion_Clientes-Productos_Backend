@@ -93,8 +93,8 @@ class ProductoController extends Controller
     //funcion que permite editar un producto
     public function update(Request $request, $id)
     {
-        $ValidateData=request->validate([
-            'Codigo' => 'required',
+        $ValidateData=$request->validate([
+            'codigo' => 'required',
             'nombre' => 'required|max:255',
             'descripcion' => 'required',
             'precio' => 'required'
@@ -102,13 +102,13 @@ class ProductoController extends Controller
 
         $model=Producto::find($id);
 
-        if(!model){
+        if(!$model){
             return response()->json(['message'=>'No se encontro el producto'],401);
         }
 
         $model->codigo=$ValidateData['codigo'];
-        $model->name=$ValidateData['name'];
-        $model->description=$ValidateData['description'];
+        $model->nombre=$ValidateData['nombre'];
+        $model->descripcion=$ValidateData['descripcion'];
         $model->precio=$ValidateData['precio'];
 
         $model->save();
@@ -131,7 +131,7 @@ class ProductoController extends Controller
         try{
             $product = Producto::where('id',$id)->firstOrFail();
             $product -> delete();
-            return Response(["Mensaje" => "Se ha eliminado correctamente"], 200);
+            return Response(["Mensaje" => "el producto Se ha eliminado correctamente"], 200);
             }catch(\Exception $e){
                 return Response(["Error al Eliminar", $e], 401);
 

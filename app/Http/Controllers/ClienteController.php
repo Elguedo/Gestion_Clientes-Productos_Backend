@@ -32,6 +32,10 @@ class ClienteController extends Controller
      public function getone(Request $request, $id)
      {
          $client=Cliente::find($id);
+
+     if(!$client){
+     return response()->json(['message'=>'Cliente no registrado']);
+     }
          return response()->json($client);
     }
  
