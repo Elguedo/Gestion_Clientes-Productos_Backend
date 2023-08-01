@@ -10,6 +10,8 @@ class Compra extends Model
     public $timestamps = false;
     use HasFactory;
 
+    protected $fillable = ['cliente_id', 'producto_id', 'cantidad', 'total_venta'];
+
     // Relación con la tabla "clientes"
     public function cliente()
     {
