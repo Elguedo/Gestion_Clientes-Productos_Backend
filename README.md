@@ -1,5 +1,16 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
+ Sistema de Gestión Sistema de Gestión Integrado
+
+Descripción:
+Este repositorio contiene el código fuente del Sistema de Gestión Integrado, una aplicación diseñada para brindar una solución integral de gestión de clientes y productos. El sistema permite a los usuarios realizar compras, ventas y llevar un registro detallado de todas las transacciones comerciales.
+
+Características destacadas:
+
+Autenticación segura basada en JSON Web Tokens (JWT) para garantizar que solo los usuarios autorizados, incluidos los administradores, puedan acceder a funciones críticas.
+APIs RESTful que facilitan la gestión de clientes, productos y compras, permitiendo la interacción con el sistema de manera sencilla y eficiente.
+Lógica de negocio implementada para relacionar compras con clientes y productos, calculando automáticamente el total de la compra y la cantidad de productos involucrados.
+
 Aqui nos registramos y y como vemos aun no somo admintradores por tanto no podemos acceder a las rutas protegitas
 ![](image.png)
 Vemos el usurio registrado en la Base de datos
@@ -37,4 +48,3 @@ aqui como se puede observar traemos a todos los clientes registrados
 ![](image-12.png)
 ## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
