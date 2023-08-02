@@ -1,0 +1,40 @@
+
+1 Clonar el repositorio:
+En el otro PC, clona el repositorio desde GitHub en un directorio local utilizando el siguiente comando en la terminal o el símbolo del sistema:
+
+git clone https://github.com/Elguedo/Rest-api_with_laravel
+
+2 Instalar dependencias:
+Navega al directorio del proyecto y ejecuta el siguiente comando para instalar las dependencias de Composer:
+
+composer install
+
+
+3 Configurar el archivo .env:
+Copia el archivo .env.example y renómbralo como .env. Asegúrate de configurar adecuadamente las variables de entorno en este archivo,
+incluyendo la conexión a la base de datos y la configuración del servidor.
+Por ejemplo, asegúrate de que las siguientes variables estén configuradas correctamente:
+
+APP_NAME=Nombre del Sistema
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nombre_base_de_datos
+DB_USERNAME=nombre_usuario
+DB_PASSWORD=contraseña
+
+4 Ejecutar migraciones 
+
+php artisan migrate
+
+5 Iniciar el servidor de desarrollo:
+
+Ejecuta el siguiente comando para iniciar el servidor de desarrollo de Laravel:
+
+php artisan serve
+
+Acceder al sistema:
+Abre tu navegador web y accede al sistema a través de la siguiente dirección:
+
+http://localhost:8000
+
