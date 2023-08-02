@@ -52,7 +52,7 @@ Route::delete('/products/{id}', 'App\Http\Controllers\ProductoController@destroy
 Route::get('/compras' ,   'App\Http\Controllers\CompraController@getall');
 Route::get('/compras/{id}' ,   'App\Http\Controllers\CompraController@getone');
 Route::post('/compras',   'App\Http\Controllers\CompraController@store');
-Route::put('/compras/{id}',   'App\Http\Controllers\CompraController@update');
+//Route::put('/compras/{id}',   'App\Http\Controllers\CompraController@update');
 Route::delete('/compras/{id}', 'App\Http\Controllers\CompraController@destroy');
 });
 

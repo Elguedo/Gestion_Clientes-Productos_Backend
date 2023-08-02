@@ -81,8 +81,10 @@ class CompraController extends Controller
                 'total_venta' => $subTotal,
             ]);
         }
-    
+
         // Crear registro de la compra con el total
+        //lo que haces t es crear un registro aparte el cual solo va tener el id del cliente ye el total de la compra 
+        //dependiendo de la cantidada de productos  a comprar y el precio de dicho producto
         Compra::create([
             'cliente_id' => $cliente_id,
             'total_venta' => $total_venta,
@@ -91,27 +93,7 @@ class CompraController extends Controller
         return response()->json(['message' => 'Compra realizada con éxito']);
     }
     
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Compra  $compra
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Compra $compra)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Compra  $compra
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Compra $compra)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -120,10 +102,62 @@ class CompraController extends Controller
      * @param  \App\Models\Compra  $compra
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Compra $compra)
+    /**
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'cliente_id' => 'required|exists:clientes,id',
+            'productos.*.producto_id' => 'required|exists:productos,id',
+            'productos.*.cantidad' => 'required|integer|min:1',
+        ]);
+    
+        $cliente_id = $request->cliente_id;
+        $productos = $request->productos;
+        $total_venta = 0;
+    
+        // Verificar si la compra existe en la base de datos
+        $compra = Compra::find($id);
+        if (!$compra) {
+            return response()->json(['error' => 'Compra no encontrada'], 404);
+        }
+    
+        // Actualizar los datos de la compra
+        $compra->cliente_id = $cliente_id;
+        $compra->total_venta = 0; // Reiniciar el total_venta para recalcularlo
+        $compra->save();
+    
+        // Eliminar los productos actuales asociados a la compra
+        $compra->productos()->delete();
+    
+        // Calcular el nuevo total de la compra recorriendo los productos
+        foreach ($productos as $producto) {
+            $producto_id = $producto['producto_id'];
+            $cantidad = $producto['cantidad'];
+    
+            $producto_Model = Producto::find($producto_id);
+    
+            if (!$producto_Model) {
+                return response()->json(['error' => 'Producto no encontrado'], 404);
+            }
+    
+            $subTotal = $producto_Model->precio * $cantidad;
+            $total_venta += $subTotal;
+    
+            // Crear registro en la tabla compras por cada producto
+            $compra->productos()->create([
+                'producto_id' => $producto_id,
+                'cantidad' => $cantidad,
+                'total_venta' => $subTotal,
+            ]);
+        }
+    
+        // Actualizar el total de la compra
+        $compra->total_venta = $total_venta;
+        $compra->save();
+    
+        return response()->json(['message' => 'Compra actualizada con éxito']);
     }
+     */
 
     /**
      * Remove the specified resource from storage.
@@ -131,8 +165,16 @@ class CompraController extends Controller
      * @param  \App\Models\Compra  $compra
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Compra $compra)
+    public function destroy(Request $request, $id)
     {
-        //
+        
+        $compra=Compra::find($id);
+        
+        if(!$compra){
+             return response()->json(['message'=>'El producto que intenta eliminar no se encuentra registrado']);
+        }
+        $compra->Delete();
+
+        return  response()->json(['message'=> 'Compra Borrada exitosamente'], 200);
     }
 }

@@ -12,6 +12,12 @@ class Compra extends Model
 
     protected $fillable = ['cliente_id', 'producto_id', 'cantidad', 'total_venta'];
 
+    public function productos()
+{
+    return $this->belongsToMany(Producto::class, 'compra_producto', 'compra_id', 'producto_id')
+                ->withPivot('cantidad', 'total_venta');
+}
+
     // Relación con la tabla "clientes"
     public function cliente()
     {

@@ -1,66 +1,28 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
+![Aqui nos registramos y y como vemos aun no somo admintradores por tanto no podemos acceder a las rutas protegitas](image.png)
+![vemos el usurio registrado en la Base de datos](image-1.png)
+![ahora para darle acceso administrador al el usurio creado editamos la columna admin en la base de atos y le asigansmo un TRUE (1)](image-2.png)
+
+![ahora con las credeciales en la ruta localhost:8000/api/login, nos logueamos y como vemos ya una vez logueado nos da la informacion del token parar la aurizacion y poder acceder a las rutas protegidas](image-3.png)
+![aqui se puede observar la informacion del token, el caul lo usaremos para acceder al sistema y poder hacer el registro de producto, clintes y de las compras, ademas se puede observar que tenemos permisos de administrador](image-4.png)
+
+![si quiero observar todas la compras realizadas tengo que poner el mi token en la parte de autorizacion y el token es de tipo bearer Token, y aluego accemos una petidion get a la ruta localhost:8000/api/compras la cual nos devuelve todas las compras realizadas](image-5.png)
+
+![si into acceder a una ruta que es protegita si el token de autorizacion,me va mostrar un mensaje indicandome de que nos estoy autizado](image-6.png)
+
+![ahora si yo le quito los derechos o permisos de adminitrado a el usuario, aun coloque el token de autorizacion, no voy a poder ver la informacion de las compras o mas bien no vpy a poder entrar a las rutas que requieren que seas administrador y que ademas este logueado o autorizado ](image-7.png)
+
+![como se puede observar en esta aqui, intentamos acceder a una ruta parar traaer todas las compras realizadas, aunque hayamos puesto el token de autorizzacion o de auntenticacion, como desahbilite los permisos de adminitrador a dicho usurio no va poder acceder a la ruta parar poder ver las compras realizadas](image-8.png)
+
+![lo mis mo tmbien pasa con las demas rutas como por ejemplo aqui borramos una compra](image-9.png)
+
+![y si vemos si intenamos buscar dicha compra por su id, observamos de que ela compra dse borro exitosamente](image-10.png)
+
+![y como vemos tambien podemos acceder a las demas rutas como por ejemplo aui traemos todos los productos que se encuentra registrados](image-11.png)
+
+![aqui como se puede observar traemos a todos los clientes registrados](image-12.png)
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
