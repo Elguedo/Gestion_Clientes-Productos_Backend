@@ -47,4 +47,5 @@ y como vemos tambien podemos acceder a las demas rutas como por ejemplo aui trae
 aqui como se puede observar traemos a todos los clientes registrados
 ![](image-12.png)
 
+para probar el sistema, siga los pasos del archivo, execute.txt
 
